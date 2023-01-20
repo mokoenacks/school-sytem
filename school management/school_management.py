@@ -6,7 +6,7 @@ from datetime import datetime
 #simpler methods are needed
 #set up mysql
 try:
-    db = mysql.connect(host="localhost",user="root",password="Sandile1342#",database="school")
+    db = mysql.connect(host="localhost",user="root",password="",database="school")
     command_handler=db.cursor(buffered=True)
 
 #function
