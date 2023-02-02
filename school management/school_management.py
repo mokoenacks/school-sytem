@@ -140,7 +140,7 @@ try:
                 print("")
                 print("Update student status")
 
-                name= input(str("Enter the name of the student"))
+                name= input(str("Enter the name of the student: "))
                 dates= input(str("Enter the date DD/MM/YYYY: "))
 
                 newStatus= input(str("Enter new status(P/A/L) :"))           
