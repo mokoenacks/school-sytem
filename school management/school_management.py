@@ -6,7 +6,7 @@ from datetime import datetime
 #simpler methods are needed
 #set up mysql
 try:
-    db = mysql.connect(host="localhost",user="root",password="",database="school")
+    db = mysql.connect(host="localhost",user="root",password="Sandile1342#",database="school")
     command_handler=db.cursor(buffered=True)
 
 #function
@@ -99,9 +99,10 @@ try:
         while 1: 
             print("") 
             print("Teacher's menu")
-            print("1 .Mark student register")
-            print("2. view student register")
-            print("3. Logout")
+            print("1 .Mark student attendence")
+            print("2 .update student attendence")
+            print("3. view student register")
+            print("4. Logout")
         
             user_opt= input(str("Option : "))
     #student Mark registry
@@ -133,17 +134,42 @@ try:
                     command_handler.execute("INSERT INTO attendents (username,date,status) VALUES (%s,%s,%s)",quary_vals)
                     db.commit()
                     print(record +"marked as "+ status)
+            #adding an update section
 
             elif user_opt=="2":
                 print("")
+                print("Update student status")
+
+                name= input(str("Enter the name of the student"))
+                dates= input(str("Enter the date DD/MM/YYYY: "))
+
+                newStatus= input(str("Enter new status(P/A/L) :"))           
+                if newStatus=="p" or newStatus=="P":
+                        newStatus="Present"
+                elif newStatus=="a" or newStatus=="A":
+                        newStatus="Absent"
+                elif newStatus=="l" or newStatus=="L":
+                       newStatus="Late"
+                else:
+                     print("invalid option")# my biggest problem
+                     newStatus = input(str("Status for "+ str(record)+ "P/A/L :"))
+
+                quary_vals=(newStatus,name,dates)
+
+                command_handler.execute("UPDATE attendents SET status=%s WHERE username=%s AND date=%s ",quary_vals)
+                db.commit()
+                print(name + " updated status is "+ newStatus)
+
+            elif user_opt=="3":
+                print("")
                 print("Viewing all student registered")
-          
                 command_handler.execute("SELECT username ,date,status FROM attendents  ")
                 records=command_handler.fetchall()
                 print("Displaying all registers")
                 for record in records:
                     print(record)
-            elif user_opt=="3":
+#log out
+            elif user_opt=="4":
                 logout = input(str("are you sure want to log out ? \n y or n :"))
 
                 if logout =="y":
@@ -158,9 +184,6 @@ try:
 
 
 
-
-
-             
 
 
 
